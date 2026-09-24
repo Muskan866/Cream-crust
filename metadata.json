@@ -1,0 +1,6 @@
+{
+  "name": "Crème & Crust Bakery",
+  "description": "Artisanal cakes, golden viennoiseries, handcrafted breads, and luxury pastries baked fresh every dawn.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
