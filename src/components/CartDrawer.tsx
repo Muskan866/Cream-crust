@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useBakery } from '../context/BakeryContext';
 import { ImageWithFallback } from './ImageWithFallback';
-import { X, Plus, Minus, Trash2, Tag, ShoppingBag, ArrowRight, Check } from 'lucide-react';
+import { X, Plus, Minus, Trash2, Tag, ShoppingBag, ArrowRight } from 'lucide-react';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -22,6 +22,19 @@ export const CartDrawer: React.FC = () => {
   } = useBakery();
 
   const [inputCoupon, setInputCoupon] = useState('');
+
+  useEffect(() => {
+    if (!isCartOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsCartOpen(false);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isCartOpen, setIsCartOpen]);
 
   if (!isCartOpen) return null;
 

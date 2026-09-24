@@ -2,7 +2,7 @@ import React from 'react';
 import bakerImg from '../assets/images/bakery_story_baker_1790261950995.jpg';
 import bakeryInteriorImg from '../assets/images/bakery_interior_cafe_1790262747306.jpg';
 import { ImageWithFallback } from './ImageWithFallback';
-import { Heart, Award, Sparkles, Coffee } from 'lucide-react';
+import { Heart, Coffee } from 'lucide-react';
 
 export const AboutSection: React.FC = () => {
   const stats = [

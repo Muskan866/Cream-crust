@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useBakery } from '../context/BakeryContext';
 import { CustomerOrderInfo, ConfirmedOrder } from '../types';
 import {
@@ -12,8 +12,7 @@ import {
   Clock,
   Sparkles,
   MapPin,
-  FileText,
-  ShoppingBag,
+  AlertCircle,
 } from 'lucide-react';
 
 export const CheckoutModal: React.FC = () => {
@@ -28,6 +27,7 @@ export const CheckoutModal: React.FC = () => {
     clearCart,
     confirmedOrder,
     setConfirmedOrder,
+    scrollToSection,
   } = useBakery();
 
   const [orderType, setOrderType] = useState<'delivery' | 'pickup'>('delivery');
@@ -47,6 +47,22 @@ export const CheckoutModal: React.FC = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (!isCheckoutOpen && !confirmedOrder) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsCheckoutOpen(false);
+        setConfirmedOrder(null);
+      }
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isCheckoutOpen, confirmedOrder, setIsCheckoutOpen, setConfirmedOrder]);
 
   if (!isCheckoutOpen && !confirmedOrder) return null;
 
@@ -233,6 +249,28 @@ export const CheckoutModal: React.FC = () => {
                 Back to Bakery
               </button>
             </div>
+          </div>
+        ) : cart.length === 0 ? (
+          /* Empty Cart State in Checkout */
+          <div className="p-8 sm:p-12 text-center">
+            <div className="w-16 h-16 rounded-full bg-[#F6EDE2] mx-auto flex items-center justify-center text-3xl mb-4">
+              🥐
+            </div>
+            <h3 className="font-serif text-2xl font-bold text-[#2C1F18]">
+              Your basket is empty
+            </h3>
+            <p className="text-xs sm:text-sm text-[#736357] mt-2 max-w-sm mx-auto mb-6">
+              Please add your favorite cakes, pastries or artisan breads before proceeding to checkout.
+            </p>
+            <button
+              onClick={() => {
+                setIsCheckoutOpen(false);
+                scrollToSection('menu');
+              }}
+              className="px-6 py-3 bg-[#3A2A20] text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-[#523C2E] transition-colors"
+            >
+              Browse Fresh Menu
+            </button>
           </div>
         ) : (
           /* View 2: Checkout Form */

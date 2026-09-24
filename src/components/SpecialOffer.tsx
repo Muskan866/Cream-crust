@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useBakery } from '../context/BakeryContext';
-import { Sparkles, Gift, ArrowRight } from 'lucide-react';
+import { Gift, ArrowRight } from 'lucide-react';
 import bakeryInteriorImg from '../assets/images/bakery_interior_cafe_1790262747306.jpg';
 
 export const SpecialOffer: React.FC = () => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { REVIEWS } from '../data/bakeryData';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import { ImageWithFallback } from './ImageWithFallback';
 
 export const CustomerReviews: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
